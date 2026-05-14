@@ -1,0 +1,497 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Scheherazade+New:wght@400;700&family=Lateef:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Custom Glassmorphism Classes ─────────────────────── */
+@layer components {
+  .glass-panel {
+    @apply bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 rounded-xl;
+  }
+
+  .glass-light {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl;
+  }
+
+  .glass-heavy {
+    @apply bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl;
+  }
+
+  .glass-card {
+    @apply bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply border-white/30 shadow-lg shadow-black/20 -translate-y-1;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-islamic-gold via-amber-300 to-emerald-400 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-gold {
+    @apply bg-gradient-to-r from-amber-200 via-islamic-gold to-amber-400 bg-clip-text text-transparent;
+  }
+
+  .font-arabic {
+    font-family: 'Scheherazade New', serif;
+  }
+
+  .font-indopak {
+    font-family: 'Lateef', serif;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-islamic-gold/70 focus:ring-offset-1 focus:ring-offset-transparent;
+  }
+
+  .ayah-active-glow {
+    box-shadow: 0 0 0 2px #D4A574, 0 0 28px rgba(212, 165, 116, 0.45), 0 0 60px rgba(212, 165, 116, 0.15);
+  }
+
+  .bismillah {
+    font-family: 'Scheherazade New', serif;
+    @apply text-center text-4xl md:text-5xl text-islamic-gold leading-loose;
+    text-shadow: 0 0 30px rgba(212, 165, 116, 0.4);
+  }
+
+  .ornament-divider {
+    @apply flex items-center gap-4 my-6;
+  }
+
+  .ornament-divider::before,
+  .ornament-divider::after {
+    @apply flex-1 h-px bg-gradient-to-r from-transparent via-islamic-gold/30 to-transparent content-[''];
+  }
+
+  /* Theme-aware backgrounds */
+  .theme-nav-bg {
+    @apply bg-gradient-to-b min-[1200px]:bg-gradient-to-r from-[#0A1A14]/95 to-[#0D1B2A]/95;
+  }
+
+  .theme-sticky-header {
+    @apply bg-gradient-to-b from-[#0A1A14]/95 to-transparent;
+  }
+
+  .theme-hero-fade {
+    @apply bg-gradient-to-t from-[#0A1A14] to-transparent;
+  }
+
+  .theme-bg-gradient {
+    @apply bg-gradient-to-b from-[#0A1A14]/95 to-[#0D1B2A]/95;
+  }
+
+  .theme-hero-glow {
+    @apply bg-blue-600/20;
+  }
+}
+
+/* ─── Global Styles ─────────────────────────────────────── */
+* {
+  @apply selection:bg-islamic-gold/40 selection:text-white;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #0F1F1A;
+  overscroll-behavior-y: none;
+}
+
+body {
+  @apply antialiased;
+  background: linear-gradient(135deg, #0F1F1A 0%, #0D1B2A 40%, #111827 70%, #0A1A12 100%);
+  min-height: 100vh;
+  overscroll-behavior-y: none;
+}
+
+/* ─── Theme Variants ─────────────────────────────────────── */
+body.theme-sepia {
+  background: linear-gradient(135deg, #2C1F0E 0%, #3D2B12 50%, #2A1F0E 100%);
+  color: #F5E6C8;
+}
+
+body.theme-sepia .glass-panel {
+  @apply bg-amber-900/20 border-amber-700/30;
+}
+
+body.theme-sepia .theme-nav-bg {
+  @apply from-[#2C1F0E]/95 to-[#3D2B12]/95 border-amber-700/30;
+}
+
+body.theme-sepia .theme-sticky-header {
+  @apply from-[#2C1F0E]/95 to-transparent;
+}
+
+body.theme-sepia .theme-hero-fade {
+  @apply from-[#2C1F0E] to-transparent;
+}
+
+body.theme-sepia .theme-bg-gradient {
+  @apply from-[#2C1F0E]/95 to-[#3D2B12]/95 border-amber-700/30;
+}
+
+body.theme-sepia .theme-hero-glow {
+  @apply bg-amber-600/10;
+}
+
+/* Sepia Overrides for Common Classes */
+body.theme-sepia .bg-white\/\[0\.03\],
+body.theme-sepia .bg-white\/\[0\.04\],
+body.theme-sepia .bg-white\/\[0\.05\],
+body.theme-sepia .bg-white\/\[0\.06\],
+body.theme-sepia .bg-white\/\[0\.08\],
+body.theme-sepia .bg-white\/10,
+body.theme-sepia .bg-black\/\[0\.04\],
+body.theme-sepia .bg-black\/\[0\.06\],
+body.theme-sepia .bg-black\/40,
+body.theme-sepia .bg-black\/98,
+body.theme-sepia .bg-black {
+  @apply bg-amber-900/20;
+}
+
+body.theme-sepia .bg-\[\#0A0F0D\],
+body.theme-sepia .bg-\[\#121212\] {
+  @apply bg-[#2C1F0E];
+}
+
+body.theme-sepia .text-white {
+  @apply text-[#F5E6C8];
+}
+
+body.theme-sepia .text-gray-400,
+body.theme-sepia .text-gray-500 {
+  @apply text-amber-200/60;
+}
+
+body.theme-light {
+  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 50%, #F8FAFC 100%);
+  color: #0F172A;
+}
+
+body.theme-light .glass-panel {
+  @apply bg-white/70 border-slate-300;
+}
+
+body.theme-light .text-white {
+  @apply text-slate-900;
+}
+
+body.theme-light .text-gray-200,
+body.theme-light .text-gray-300,
+body.theme-light .text-gray-400 {
+  @apply text-slate-800;
+}
+
+body.theme-light .text-gray-500,
+body.theme-light .text-gray-600 {
+  @apply text-slate-600;
+}
+
+body.theme-light .text-islamic-gold {
+  @apply text-amber-700;
+}
+
+body.theme-light .theme-nav-bg {
+  @apply from-white to-slate-100 border-slate-300;
+}
+
+body.theme-light .theme-sticky-header {
+  @apply from-[#F8FAFC]/95 to-transparent;
+}
+
+body.theme-light .theme-hero-fade {
+  @apply from-[#F8FAFC] to-transparent;
+}
+
+body.theme-light .theme-bg-gradient {
+  @apply from-white to-slate-50 border-slate-200;
+}
+
+body.theme-light .theme-hero-glow {
+  @apply bg-blue-400/5;
+}
+
+/* Common Opacity Overrides for Light Mode */
+body.theme-light .bg-white\/\[0\.02\],
+body.theme-light .bg-white\/\[0\.03\],
+body.theme-light .bg-white\/\[0\.04\],
+body.theme-light .bg-white\/\[0\.05\],
+body.theme-light .bg-white\/\[0\.06\],
+body.theme-light .bg-white\/\[0\.08\],
+body.theme-light .bg-white\/10,
+body.theme-light .bg-black\/80,
+body.theme-light .bg-black\/90,
+body.theme-light .bg-black\/98,
+body.theme-light .bg-black {
+  @apply bg-slate-100/80;
+}
+
+body.theme-light .from-black\/80 {
+  @apply from-slate-200/80;
+}
+
+body.theme-light .border-white\/\[0\.04\],
+body.theme-light .border-white\/\[0\.05\],
+body.theme-light .border-white\/\[0\.06\],
+body.theme-light .border-white\/\[0\.08\],
+body.theme-light .border-white\/\[0\.1\],
+body.theme-light .border-white\/\[0\.15\],
+body.theme-light .border-white\/10,
+body.theme-light .border-white\/20 {
+  @apply border-slate-200;
+}
+
+body.theme-light .hover\:bg-white\/\[0\.02\]:hover,
+body.theme-light .hover\:bg-white\/\[0\.06\]:hover,
+body.theme-light .hover\:bg-white\/\[0\.07\]:hover,
+body.theme-light .hover\:bg-white\/\[0\.08\]:hover {
+  @apply bg-slate-200/80;
+}
+
+body.theme-light .hover\:border-white\/\[0\.15\]:hover,
+body.theme-light .hover\:border-islamic-gold\/40:hover {
+  @apply border-amber-500/40;
+}
+
+/* Specific component overrides for Light Mode */
+body.theme-light .bg-\[\#0A0F0D\],
+body.theme-light .bg-\[\#121212\] {
+  @apply bg-slate-50;
+}
+
+body.theme-light .from-white\/\[0\.05\] {
+  @apply from-slate-200/50;
+}
+
+body.theme-light .from-black\/90 {
+  @apply from-white/90;
+}
+
+body.theme-light .via-black\/40 {
+  @apply via-slate-100/40;
+}
+
+/* Text Gray Overrides for Light Mode */
+body.theme-light .text-gray-100 {
+  @apply text-slate-950;
+}
+
+body.theme-light .text-gray-200 {
+  @apply text-slate-900;
+}
+
+body.theme-light .text-gray-300 {
+  @apply text-slate-800;
+}
+
+body.theme-light .text-gray-400 {
+  @apply text-slate-700;
+}
+
+body.theme-light .text-gray-500 {
+  @apply text-slate-500;
+}
+
+body.theme-light .text-gray-600 {
+  @apply text-slate-400;
+}
+
+/* Badge and specific text color overrides for Light Mode */
+body.theme-light .text-emerald-300 { @apply text-emerald-800; }
+body.theme-light .text-slate-300 { @apply text-slate-800; }
+body.theme-light .text-blue-300 { @apply text-blue-800; }
+body.theme-light .text-purple-300 { @apply text-purple-800; }
+body.theme-light .text-amber-300 { @apply text-amber-800; }
+body.theme-light .text-amber-200 { @apply text-amber-900; }
+body.theme-light .text-white\/10 { @apply text-slate-400/20; }
+body.theme-light .text-white\/20 { @apply text-slate-400/30; }
+
+/* Light Mode Prose */
+body.theme-light .prose-tafseer p {
+  @apply text-slate-900;
+}
+
+body.theme-light .prose-tafseer h4 {
+  @apply text-amber-800;
+}
+
+body.theme-light .prose-tafseer li {
+  @apply text-slate-800;
+}
+
+body.theme-light .prose-tafseer .drop-cap::first-letter {
+  @apply text-amber-700;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+/* Hide scrollbar for all browsers while allowing scrolling */
+* {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari and Opera */
+}
+
+/* Specific class to show a subtle internal scrollbar */
+.show-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.show-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+}
+
+.show-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.show-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Range Input ────────────────────────────────────────── */
+input[type='range'] {
+  @apply cursor-pointer appearance-none bg-transparent;
+}
+
+input[type='range']::-webkit-slider-track {
+  @apply h-1 rounded-full bg-white/20;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  @apply appearance-none w-3 h-3 bg-islamic-gold rounded-full cursor-pointer shadow-lg;
+  margin-top: -4px;
+}
+
+input[type='range']::-moz-range-thumb {
+  @apply w-3 h-3 bg-islamic-gold rounded-full cursor-pointer border-0;
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px #D4A574, 0 0 20px rgba(212, 165, 116, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 0 2px #D4A574, 0 0 40px rgba(212, 165, 116, 0.6), 0 0 80px rgba(212, 165, 116, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes waveform {
+
+  0%,
+  100% {
+    height: 4px;
+  }
+
+  50% {
+    height: 20px;
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.waveform-bar {
+  animation: waveform 0.8s ease-in-out infinite;
+}
+
+.waveform-bar:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.waveform-bar:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.waveform-bar:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+/* ─── Responsive Typography ─────────────────────────────── */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* ─── cmdk command palette overrides ───────────────────── */
+[cmdk-group-heading] {
+  @apply text-xs font-semibold text-islamic-gold uppercase tracking-wider px-3 py-2;
+}
+
+[cmdk-item] {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm text-gray-200 transition-colors duration-150;
+}
+
+[cmdk-item][aria-selected='true'] {
+  @apply bg-islamic-gold/20 text-white;
+}
+
+/* ─── Prose overrides for Tafseer ──────────────────────── */
+.prose-tafseer p {
+  @apply text-gray-200 leading-8 text-base mb-5;
+}
+
+.prose-tafseer h4 {
+  @apply text-islamic-gold font-bold text-lg mb-3;
+}
+
+.prose-tafseer li {
+  @apply text-gray-300 leading-7 mb-2;
+}
+
+.prose-tafseer .drop-cap::first-letter {
+  @apply float-left text-5xl font-bold text-islamic-gold mr-2 mt-1 leading-none;
+  font-family: 'Scheherazade New', serif;
+}

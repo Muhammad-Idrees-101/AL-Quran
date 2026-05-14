@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://al-quran-interactive.com/sitemap.xml
+
+Disallow: /admin
+Disallow: /api/private
