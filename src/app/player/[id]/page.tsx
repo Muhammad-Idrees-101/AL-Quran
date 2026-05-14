@@ -1,11 +1,63 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { SURAHS } from '@/lib/mockData';
 import { Ayah } from '@/types/quran';
 import { QuranPlayerContent } from './content';
 
+const BASE_URL = 'https://al-quran-interactive.com';
+
 // SSG: Generate static params for all 114 Surahs
 export function generateStaticParams() {
   return SURAHS.map((surah) => ({ id: surah.id.toString() }));
+}
+
+// Dynamic per-Surah SEO metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const surahId = parseInt(params.id);
+  const surah = SURAHS.find((s) => s.id === surahId);
+
+  if (!surah) {
+    return {
+      title: 'Surah Not Found',
+      description: 'The requested Surah could not be found.',
+    };
+  }
+
+  const title = `Surah ${surah.name_english} (${surah.name_arabic}) \u2014 Read & Listen Online`;
+  const description = `Read Surah ${surah.name_english} (#${surah.id}) online with English & Urdu translation, Tafseer, and audio recitation. ${surah.ayah_count} Ayahs \u2014 ${surah.revelation_type} revelation.`;
+  const canonicalUrl = `${BASE_URL}/player/${surah.id}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: canonicalUrl },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: 'Al-Quran Interactive',
+      type: 'article',
+      locale: 'en_US',
+      images: [
+        {
+          url: `${BASE_URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: `Surah ${surah.name_english} \u2014 Al-Quran Interactive`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${BASE_URL}/og-image.png`],
+    },
+  };
 }
 
 import fs from 'fs';

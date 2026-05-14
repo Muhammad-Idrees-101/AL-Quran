@@ -1,0 +1,30 @@
+{
+  "name": "Al-Quran Interactive",
+  "short_name": "Al-Quran",
+  "description": "Read, listen, and study the Holy Quran with translations, Tafseer, and scholarly video lectures.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f0d",
+  "theme_color": "#0d9488",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["education", "lifestyle", "religion"],
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Al-Quran Interactive Homepage"
+    }
+  ]
+}
