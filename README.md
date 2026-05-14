@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Al-Quran Interactive MVP
 
 A premium, high-performance Islamic Knowledge Hub built with Next.js 14+, TypeScript, and Tailwind CSS.
@@ -208,3 +209,21 @@ Contributions are welcome! Please follow the atomic design principles and mainta
 - Data is currently mocked. Integrate with a Quran API for real data.
 - Audio files need to be provided separately.
 - Performance optimizations: SSG for Surahs, incremental static regeneration (ISR) for videos.
+=======
+# AL-QURAN
+The Modern Al-Quran Dashboard is a state-of-the-art web application designed to provide an immersive spiritual experience through cutting-edge web technologies. Built with a focus on UI/UX excellence, it combines high-end design aesthetics with functional depth."
+
+Key Features:
+
+Aesthetic UI: Premium Apple-style Glassmorphism with smooth GSAP and Framer Motion animations.
+
+Smart Navigation: Independent sidebar scrolling for 114 Surahs with a fluid content area for Tafseer.
+
+Multi-Scholar Video Library: Seamlessly switch between different scholars' video Tafseer for the same Surah.
+
+Global Audio Player: Access a vast library of world-renowned Qaris with dynamic audio streaming.
+
+Adaptive Themes: High-contrast White, Dark, and Sepia modes with an elegant, theme-responsive 'Allah' calligraphy background.
+
+Security First: Architected with strict Environment Variable management to ensure 100% protection of API secrets.
+>>>>>>> 60877cc10da72cb141aee76c608392268524058b
