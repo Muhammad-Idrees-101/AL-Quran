@@ -379,16 +379,16 @@ export default function DuasPage() {
         </div>
       </motion.section>
 
-      <div className="flex-1 px-4 md:px-8 py-8">
+      <div className="flex-1 px-4 md:px-8 py-4 md:py-8 pb-24 md:pb-8">
         {/* Category Chips */}
-        <div className="flex gap-2 flex-wrap mb-8">
+        <div className="flex gap-2 overflow-x-auto pb-4 mb-4 md:mb-8 show-scrollbar -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap">
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => setActiveCategory(null)}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all border ${
+            className={`flex-shrink-0 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${
               activeCategory === null
-                ? 'bg-islamic-gold/15 text-islamic-gold border-islamic-gold/25'
-                : 'bg-white/[0.04] text-gray-400 border-transparent hover:bg-white/[0.08]'
+                ? 'bg-islamic-gold/15 text-islamic-gold border-islamic-gold/40 shadow-lg shadow-islamic-gold/10'
+                : 'bg-white/[0.04] text-gray-400 border-white/[0.08] hover:bg-white/[0.08] hover:text-white'
             }`}
           >
             ✨ All Categories
@@ -398,10 +398,10 @@ export default function DuasPage() {
               key={cat.id}
               whileTap={{ scale: 0.95 }}
               onClick={() => setActiveCategory(cat.id === activeCategory ? null : cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all border ${
+              className={`flex-shrink-0 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${
                 activeCategory === cat.id
-                  ? 'bg-islamic-gold/15 text-islamic-gold border-islamic-gold/25'
-                  : 'bg-white/[0.04] text-gray-400 border-transparent hover:bg-white/[0.08]'
+                  ? 'bg-islamic-gold/15 text-islamic-gold border-islamic-gold/40 shadow-lg shadow-islamic-gold/10'
+                  : 'bg-white/[0.04] text-gray-400 border-white/[0.08] hover:bg-white/[0.08] hover:text-white'
               }`}
             >
               {cat.icon} {cat.label}
@@ -414,9 +414,9 @@ export default function DuasPage() {
           {(activeCategory ? DUA_CATEGORIES.filter(c => c.id === activeCategory) : filteredCategories).map((cat, ci) => (
             <motion.div
               key={cat.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: ci * 0.05 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
             >
               {/* Category Header */}
               <div className="flex items-center gap-3 mb-4">
@@ -434,7 +434,7 @@ export default function DuasPage() {
                     key={dua.id}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: di * 0.04 }}
+                    transition={{ duration: 0.2 }}
                     className={`rounded-2xl border bg-gradient-to-br ${cat.color} overflow-hidden`}
                   >
                     {/* Dua Header */}

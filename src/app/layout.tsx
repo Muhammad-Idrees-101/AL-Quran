@@ -154,7 +154,7 @@ export default function RootLayout({
         <Providers>
           <div className="flex min-h-screen min-[1200px]:flex-col">
             {/* Sidebar Navigation */}
-            <SidebarNavigation isOpen={true} />
+            <SidebarNavigation />
 
             {/* Main Content Area */}
             <main className="flex-1 md:ml-64 min-[1200px]:ml-0 min-[1200px]:pt-20 min-h-screen flex flex-col">

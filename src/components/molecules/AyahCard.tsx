@@ -88,10 +88,10 @@ export const AyahCard: React.FC<AyahCardProps> = ({ ayah, surah, index, isScroll
     <motion.div
       ref={cardRef}
       id={`ayah-${ayah.ayah_number}`}
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ delay: Math.min(index * 0.02, 0.3) }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '100px' }}
+      transition={{ duration: 0.3 }}
     >
       <div
         className={cn(

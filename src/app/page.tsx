@@ -257,8 +257,8 @@ export default function HomePage() {
                   key={surah.id}
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ once: true, margin: '-20px' }}
-                  transition={{ delay: Math.min(index * 0.01, 0.3) }}
+                  viewport={{ once: true, margin: '100px' }}
+                  transition={{ duration: 0.2 }}
                 >
                   <Link href={`/player/${surah.id}`}>
                     <motion.div whileHover={{ y: -3 }} whileTap={{ scale: 0.97 }}>

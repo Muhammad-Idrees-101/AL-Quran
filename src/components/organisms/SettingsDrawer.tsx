@@ -307,7 +307,8 @@ export const SettingsDrawer: React.FC = () => {
               </Section>
 
               {/* ── Reciter Library ─────────────────────────────── */}
-              <Section title="🎙️ Reciter Library">
+              <div className="hidden md:block">
+                <Section title="🎙️ Reciter Library">
 
                 {/* Active reciter card */}
                 {activeReciterMeta && (
@@ -391,6 +392,7 @@ export const SettingsDrawer: React.FC = () => {
                   )}
                 </div>
               </Section>
+              </div>
 
               {/* Display */}
               <Section title="👁️ Display">
