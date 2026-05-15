@@ -1,0 +1,26 @@
+'use client';
+
+export default function GlobalError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <div className="flex h-screen w-full flex-col items-center justify-center bg-dark-slate text-white">
+          <h2 className="mb-4 text-2xl font-bold text-islamic-gold">Critical Error</h2>
+          <p className="mb-8 text-gray-400">{error.message}</p>
+          <button
+            onClick={() => reset()}
+            className="rounded-xl bg-islamic-emerald px-6 py-3 font-semibold text-white hover:bg-emerald-600"
+          >
+            Try again
+          </button>
+        </div>
+      </body>
+    </html>
+  );
+}

@@ -179,7 +179,7 @@ export default function RootLayout({
             <SidebarNavigation />
 
             {/* Main Content Area */}
-            <main className="flex-1 md:ml-64 min-[1200px]:ml-0 min-[1200px]:pt-20 min-h-screen flex flex-col">
+            <main className="flex-1 lg:ml-64 min-[1200px]:ml-0 min-[1200px]:pt-20 min-h-screen flex flex-col">
               <div className="flex-1 pb-16">
                 {children}
               </div>

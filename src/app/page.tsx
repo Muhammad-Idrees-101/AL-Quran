@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { OmniSearch } from '@/components/molecules';
-import { ContinuationCard } from '@/components/organisms';
+import { ContinuationCard } from '@/components/organisms/ContinuationCard';
 import { PrayerTimesWidget } from '@/components/organisms/PrayerTimesWidget';
 import { GlassPanel, Badge, Button } from '@/components/atoms';
 import { SURAHS } from '@/lib/mockData';
@@ -73,7 +73,7 @@ export default function HomePage() {
           </Link>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-[1.05] mb-6">
-            The Quran is<br className="hidden sm:block" /> your guide.
+            The Quran is<br className="hidden sm:block" /> Your Guidance.
           </h1>
           <p className="text-gray-400 text-lg md:text-xl max-w-2xl font-medium mb-10">
             Al-Quran Interactive is where you read, study, and listen to the divine revelation.

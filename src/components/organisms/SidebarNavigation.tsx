@@ -43,9 +43,10 @@ export const SidebarNavigation: React.FC = () => {
   return (
     <>
       {/* =========================================
-          MOBILE LAYOUT (Hidden on md and up)
+      {/* =========================================
+          MOBILE LAYOUT (Hidden on lg and up)
       ========================================= */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         {/* Mobile Top Header */}
         <header className="fixed top-0 left-0 right-0 h-16 z-40 bg-black/40 backdrop-blur-xl border-b border-white/[0.08] flex items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2">
@@ -177,10 +178,10 @@ export const SidebarNavigation: React.FC = () => {
       </div>
 
       {/* =========================================
-          DESKTOP LAYOUT (Hidden on < md)
+          DESKTOP LAYOUT (Hidden on < lg)
       ========================================= */}
       <motion.div
-        className="hidden md:flex fixed left-0 top-0 h-screen w-64 z-40 min-[1200px]:h-20 min-[1200px]:w-full min-[1200px]:flex-col"
+        className="hidden lg:flex fixed left-0 top-0 h-screen w-64 z-40 min-[1200px]:h-20 min-[1200px]:w-full min-[1200px]:flex-col"
         initial={false}
       >
         <div className="h-full theme-nav-bg backdrop-blur-xl border-r min-[1200px]:border-r-0 min-[1200px]:border-b border-white/[0.08] flex flex-col min-[1200px]:flex-row px-4 py-6 min-[1200px]:py-0 min-[1200px]:px-8 min-[1200px]:items-center overflow-y-auto min-[1200px]:overflow-visible">

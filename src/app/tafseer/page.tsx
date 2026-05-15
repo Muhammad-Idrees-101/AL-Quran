@@ -7,6 +7,7 @@ import { Button, Badge } from '@/components/atoms';
 import { SURAHS, TAFSEERS, getTafseerContent } from '@/lib/mockData';
 import { useSettingsStore } from '@/stores/settingsStore';
 import { cn } from '@/utils/cn';
+import { useMounted } from '@/hooks/useMounted';
 import drIsrarData from '@/data/dr_israr_tafseer.json';
 
 export default function TafseerPage() {
@@ -24,12 +25,18 @@ export default function TafseerPage() {
   const [mobileRefsOpen, setMobileRefsOpen] = useState(false);
 
   const [showVideoModal, setShowVideoModal] = useState(false);
-  const { readingLanguage, setReadingLanguage } = useSettingsStore();
-  const isUrdu = readingLanguage === 'ur';
+  const readingLanguage = useSettingsStore(s => s.readingLanguage);
+  const setReadingLanguage = useSettingsStore(s => s.setReadingLanguage);
+  const activeTheme = useSettingsStore(s => s.activeTheme);
+  
+  const mounted = useMounted();
+  const safeReadingLanguage = mounted ? readingLanguage : 'en';
+  const isLight = mounted ? activeTheme === 'light' : false;
+  const isUrdu = safeReadingLanguage === 'ur';
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const surah = SURAHS.find((s) => s.id === selectedSurah);
-  const content = getTafseerContent(selectedTafsir, selectedSurah, readingLanguage);
+  const content = getTafseerContent(selectedTafsir, selectedSurah, safeReadingLanguage);
   const activeTafsir = TAFSEERS.find(t => t.id === selectedTafsir);
 
   const filteredSurahs = SURAHS.filter(s =>
@@ -138,9 +145,9 @@ export default function TafseerPage() {
   );
 
   return (
-    <div className="flex flex-col min-h-screen pt-16 md:pt-0 pb-16 md:pb-0">
-      {/* Mobile Top App Bar (Replaces Desktop Sticky Header on Mobile) */}
-      <div className="md:hidden fixed top-16 left-0 right-0 z-30 bg-[#0d2620]/92 backdrop-blur-xl border-b border-teal-500/10 p-3 flex flex-col gap-3">
+    <div className="flex flex-col min-h-screen pt-16 lg:pt-0 pb-16 lg:pb-0">
+      {/* Mobile Top App Bar (Replaces Desktop Sticky Header on Mobile & Tablet) */}
+      <div className="lg:hidden fixed top-16 left-0 right-0 z-30 bg-[#0d2620]/92 backdrop-blur-xl border-b border-teal-500/10 p-3 flex flex-col gap-3">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-base font-bold text-white leading-tight">Tafseer Library</h1>
@@ -190,7 +197,7 @@ export default function TafseerPage() {
       <motion.section
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="hidden md:block sticky top-20 z-20 theme-sticky-header backdrop-blur-xl border-b border-white/[0.06] px-8 py-4"
+        className="hidden lg:block sticky top-20 z-20 theme-sticky-header backdrop-blur-xl border-b border-white/[0.06] px-8 py-4"
       >
         <div className="flex items-center justify-between gap-3">
           <div>
@@ -240,8 +247,8 @@ export default function TafseerPage() {
         </div>
       </motion.section>
 
-      {/* 3-Panel Layout (Desktop) / Mobile Content */}
-      <div className="flex-1 flex items-start mt-[130px] md:mt-0">
+      {/* 3-Panel Layout (Desktop) / Mobile & Tablet Content */}
+      <div className="flex-1 flex items-start mt-[130px] lg:mt-0">
 
         {/* Left: TOC (Desktop) */}
         <AnimatePresence>
@@ -260,7 +267,7 @@ export default function TafseerPage() {
         </AnimatePresence>
 
         {/* Center: Content */}
-        <div className="flex-1 px-4 md:px-8 pt-4 md:pt-8 pb-12 w-full max-w-[100vw]">
+        <div className="flex-1 px-4 md:px-8 pt-4 md:pt-8 pb-12 w-full overflow-x-hidden">
           {/* Surah Header */}
           {surah && (
             <motion.div
@@ -364,10 +371,14 @@ export default function TafseerPage() {
                 </p>
               ))}
 
-              {/* Key Insights */}
-              <div className="mt-10 bg-gradient-to-br from-[#0d2d24] via-[#0d2035] to-[#112240] rounded-2xl p-5 md:p-6 border border-teal-500/20 relative overflow-hidden">
-                {/* Decorative background blur */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 blur-[50px] rounded-full pointer-events-none" />
+              <div className={cn(
+                "mt-10 rounded-2xl p-5 md:p-6 border relative overflow-hidden transition-all duration-300",
+                isLight 
+                  ? "bg-white border-gray-200 shadow-md" 
+                  : "bg-gradient-to-br from-[#0d2d24] via-[#0d2035] to-[#112240] border-teal-500/20 shadow-xl"
+              )}>
+                {/* Decorative background blur (only in dark mode) */}
+                {(!isLight && mounted) && <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 blur-[50px] rounded-full pointer-events-none" />}
 
                 <h4 className="text-base font-bold text-islamic-gold mb-4 flex items-center gap-2">
                   <span>💡</span> {isUrdu ? 'کلیدی بصیرتیں' : 'Key Insights'}
@@ -401,7 +412,7 @@ export default function TafseerPage() {
         </AnimatePresence>
       </div>
 
-      {/* MOBILE MODALS */}
+      {/* MOBILE & TABLET MODALS */}
       <AnimatePresence>
         {mobileTocOpen && (
           <motion.div
@@ -409,7 +420,7 @@ export default function TafseerPage() {
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-50 md:hidden"
+            className="fixed inset-0 z-50 lg:hidden"
           >
             <TocContent />
           </motion.div>
@@ -423,7 +434,7 @@ export default function TafseerPage() {
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-50 md:hidden"
+            className="fixed inset-0 z-50 lg:hidden"
           >
             <RefsContent />
           </motion.div>

@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { cn } from '@/utils/cn';
+import { useMounted } from '@/hooks/useMounted';
 
 // ─── Duas Data ───────────────────────────────────────────────
 interface Dua {
@@ -331,7 +333,11 @@ export default function DuasPage() {
   const [expandedDua, setExpandedDua] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
-  const { readingLanguage } = useSettingsStore();
+  const readingLanguage = useSettingsStore(s => s.readingLanguage);
+  const activeTheme = useSettingsStore(s => s.activeTheme);
+  const mounted = useMounted();
+  const safeReadingLanguage = mounted ? readingLanguage : 'en';
+  const isLight = mounted ? activeTheme === 'light' : false;
 
   const filteredCategories = DUA_CATEGORIES.filter(cat =>
     searchQuery === '' ||
@@ -354,7 +360,7 @@ export default function DuasPage() {
     : filteredCategories;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-full max-w-[100vw] overflow-x-hidden">
 
       {/* ── Sticky Header ── */}
       <motion.section
@@ -428,7 +434,7 @@ export default function DuasPage() {
       </motion.section>
 
       {/* ── Main Content ── */}
-      <div className="flex-1 px-4 md:px-8 py-5 pb-28 md:pb-10 space-y-8">
+      <div className="flex-1 px-4 md:px-8 py-5 pb-28 lg:pb-10 space-y-8">
 
         {/* Category sections */}
         {displayedCategories.map((cat) => (
@@ -456,7 +462,12 @@ export default function DuasPage() {
                 return (
                   <div
                     key={dua.id}
-                    className={`rounded-2xl border bg-gradient-to-br ${cat.color} overflow-hidden transition-all duration-200`}
+                    className={cn(
+                      "rounded-2xl border overflow-hidden transition-all duration-300",
+                      isLight 
+                        ? "bg-white border-slate-200 shadow-md" 
+                        : `bg-gradient-to-br ${cat.color} shadow-lg`
+                    )}
                   >
                     {/* Tap header */}
                     <button
@@ -523,10 +534,10 @@ export default function DuasPage() {
                             {/* Meaning */}
                             <div className="bg-white/[0.04] rounded-xl px-4 py-3">
                               <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mb-1.5">
-                                {readingLanguage === 'ur' ? 'ترجمہ' : 'Meaning'}
+                                {safeReadingLanguage === 'ur' ? 'ترجمہ' : 'Meaning'}
                               </p>
-                              <p className={`text-sm text-gray-200 leading-7 ${readingLanguage === 'ur' ? 'font-arabic text-right text-base' : ''}`}>
-                                {readingLanguage === 'ur' ? dua.translation_ur : dua.translation}
+                              <p className={`text-sm text-gray-200 leading-7 ${safeReadingLanguage === 'ur' ? 'font-arabic text-right text-base' : ''}`}>
+                                {safeReadingLanguage === 'ur' ? dua.translation_ur : dua.translation}
                               </p>
                             </div>
 
