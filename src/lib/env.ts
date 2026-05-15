@@ -8,6 +8,7 @@ interface EnvSchema {
   NEXT_PUBLIC_QURAN_API: string;
   NEXT_PUBLIC_API_URL: string;
   NEXT_PUBLIC_AUDIO_CDN: string;
+  NEXT_PUBLIC_SITE_URL: string;
   NEXT_PUBLIC_ENV: 'development' | 'production' | 'test';
 
   // Private (Server-side only)
@@ -24,6 +25,7 @@ export const env: EnvSchema = {
   NEXT_PUBLIC_QURAN_API: process.env.NEXT_PUBLIC_QURAN_API || 'https://api.alquran.cloud',
   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://api.example.com',
   NEXT_PUBLIC_AUDIO_CDN: process.env.NEXT_PUBLIC_AUDIO_CDN || 'https://everyayah.com/data',
+  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://al-quran-beige.vercel.app/',
   NEXT_PUBLIC_ENV: (process.env.NEXT_PUBLIC_ENV as any) || 'development',
 
   // Private variables should only be accessed on the server
@@ -58,8 +60,13 @@ export function validateServerEnv() {
 if (typeof window !== 'undefined') {
   const sensitiveKeys = ['STRIPE_SECRET_KEY', 'DATABASE_URL', 'JWT_SECRET', 'INTERNAL_API_KEY'];
   sensitiveKeys.forEach(key => {
-    if ((process.env as any)[key]) {
-      console.warn(`⚠️ SECURITY WARNING: Sensitive variable ${key} is visible on the client-side. Ensure it is NOT prefixed with NEXT_PUBLIC_.`);
+    try {
+      // On some client environments, process.env might not be a full object or might be undefined
+      if (typeof process !== 'undefined' && process.env && (process.env as any)[key]) {
+        console.warn(`⚠️ SECURITY WARNING: Sensitive variable ${key} is visible on the client-side. Ensure it is NOT prefixed with NEXT_PUBLIC_.`);
+      }
+    } catch (e) {
+      // Silently fail if process.env is not accessible
     }
   });
 }

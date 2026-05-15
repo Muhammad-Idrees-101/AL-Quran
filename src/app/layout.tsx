@@ -1,9 +1,28 @@
 import type { Metadata, Viewport } from 'next';
+import dynamic from 'next/dynamic';
 import { Analytics } from '@vercel/analytics/next';
 import { Providers } from './providers';
-import { SidebarNavigation, GlobalAudioPlayer, SettingsDrawer, Footer } from '@/components/organisms';
 import { validateServerEnv, env } from '@/lib/env';
 import './globals.css';
+
+// Client-only organisms — must NOT be SSR'd through the server layout
+// (they rely on Zustand persist + localStorage which is browser-only)
+const SidebarNavigation = dynamic(
+  () => import('@/components/organisms/SidebarNavigation').then(m => m.SidebarNavigation),
+  { ssr: false }
+);
+const GlobalAudioPlayer = dynamic(
+  () => import('@/components/organisms/GlobalAudioPlayer').then(m => m.GlobalAudioPlayer),
+  { ssr: false }
+);
+const SettingsDrawer = dynamic(
+  () => import('@/components/organisms/SettingsDrawer').then(m => m.SettingsDrawer),
+  { ssr: false }
+);
+const Footer = dynamic(
+  () => import('@/components/organisms/Footer').then(m => m.Footer),
+  { ssr: false }
+);
 
 // Validate environment variables on the server
 validateServerEnv();

@@ -333,8 +333,6 @@ export default function DuasPage() {
   const [copied, setCopied] = useState<string | null>(null);
   const { readingLanguage } = useSettingsStore();
 
-  const activeData = DUA_CATEGORIES.find(c => c.id === activeCategory);
-
   const filteredCategories = DUA_CATEGORIES.filter(cat =>
     searchQuery === '' ||
     cat.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -351,170 +349,216 @@ export default function DuasPage() {
     });
   };
 
+  const displayedCategories = activeCategory
+    ? DUA_CATEGORIES.filter(c => c.id === activeCategory)
+    : filteredCategories;
+
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Header */}
+
+      {/* ── Sticky Header ── */}
       <motion.section
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 min-[1200px]:top-20 z-20 theme-sticky-header backdrop-blur-xl border-b border-white/[0.06] px-4 md:px-8 py-4"
+        className="sticky top-0 min-[1200px]:top-20 z-20 theme-sticky-header backdrop-blur-xl border-b border-white/[0.06]"
       >
-        <div className="flex flex-col md:flex-row md:items-center gap-3">
-          <div>
-            <button onClick={() => router.push('/')} className="text-xs text-gray-500 hover:text-white mb-1 flex items-center gap-1">← Back</button>
-            <h1 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-2">
-              💧 Duas Collection
+        {/* Title row */}
+        <div className="flex items-center gap-3 px-4 md:px-8 pt-4 pb-2">
+          <button
+            onClick={() => router.push('/')}
+            className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.08] text-gray-400 hover:text-white hover:bg-white/[0.10] transition-all flex-shrink-0"
+            aria-label="Go back"
+          >
+            ←
+          </button>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl md:text-2xl font-bold text-white leading-tight flex items-center gap-2">
+              💧 <span>Duas Collection</span>
             </h1>
-            <p className="text-xs text-gray-400">Authentic supplications from Quran & Sunnah</p>
+            <p className="text-[11px] text-gray-500 mt-0.5">Authentic supplications · Quran & Sunnah</p>
           </div>
-          <div className="md:ml-auto">
+        </div>
+
+        {/* Search */}
+        <div className="px-4 md:px-8 pb-3">
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">🔍</span>
             <input
               type="text"
-              placeholder="Search duas..."
+              placeholder="Search duas, topics..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full md:w-64 bg-white/[0.06] border border-white/[0.1] rounded-xl px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-islamic-gold/50"
+              className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-islamic-gold/50 focus:border-islamic-gold/30 transition-all"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white text-sm"
+              >✕</button>
+            )}
           </div>
+        </div>
+
+        {/* Category chips horizontal scroll */}
+        <div className="flex gap-2 overflow-x-auto pb-3 px-4 md:px-8 show-scrollbar md:flex-wrap">
+          <button
+            onClick={() => setActiveCategory(null)}
+            className={`flex-shrink-0 h-9 px-4 rounded-full text-xs font-semibold transition-all border ${
+              activeCategory === null
+                ? 'bg-islamic-gold/20 text-islamic-gold border-islamic-gold/40'
+                : 'bg-white/[0.04] text-gray-400 border-white/[0.08] active:bg-white/[0.10]'
+            }`}
+          >
+            ✨ All
+          </button>
+          {DUA_CATEGORIES.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id === activeCategory ? null : cat.id)}
+              className={`flex-shrink-0 h-9 px-4 rounded-full text-xs font-semibold transition-all border ${
+                activeCategory === cat.id
+                  ? 'bg-islamic-gold/20 text-islamic-gold border-islamic-gold/40'
+                  : 'bg-white/[0.04] text-gray-400 border-white/[0.08] active:bg-white/[0.10]'
+              }`}
+            >
+              {cat.icon} {cat.label.split(' ')[0]}
+            </button>
+          ))}
         </div>
       </motion.section>
 
-      <div className="flex-1 px-4 md:px-8 py-4 md:py-8 pb-24 md:pb-8">
-        {/* Category Chips */}
-        <div className="flex gap-2 overflow-x-auto pb-4 mb-4 md:mb-8 show-scrollbar -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap">
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setActiveCategory(null)}
-            className={`flex-shrink-0 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${
-              activeCategory === null
-                ? 'bg-islamic-gold/15 text-islamic-gold border-islamic-gold/40 shadow-lg shadow-islamic-gold/10'
-                : 'bg-white/[0.04] text-gray-400 border-white/[0.08] hover:bg-white/[0.08] hover:text-white'
-            }`}
+      {/* ── Main Content ── */}
+      <div className="flex-1 px-4 md:px-8 py-5 pb-28 md:pb-10 space-y-8">
+
+        {/* Category sections */}
+        {displayedCategories.map((cat) => (
+          <motion.div
+            key={cat.id}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            ✨ All Categories
-          </motion.button>
-          {DUA_CATEGORIES.map(cat => (
-            <motion.button
-              key={cat.id}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveCategory(cat.id === activeCategory ? null : cat.id)}
-              className={`flex-shrink-0 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${
-                activeCategory === cat.id
-                  ? 'bg-islamic-gold/15 text-islamic-gold border-islamic-gold/40 shadow-lg shadow-islamic-gold/10'
-                  : 'bg-white/[0.04] text-gray-400 border-white/[0.08] hover:bg-white/[0.08] hover:text-white'
-              }`}
-            >
-              {cat.icon} {cat.label}
-            </motion.button>
-          ))}
-        </div>
-
-        {/* Category + Duas Grid */}
-        <div className="space-y-8">
-          {(activeCategory ? DUA_CATEGORIES.filter(c => c.id === activeCategory) : filteredCategories).map((cat, ci) => (
-            <motion.div
-              key={cat.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Category Header */}
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">{cat.icon}</span>
-                <h2 className="text-lg font-bold text-white">{cat.label}</h2>
-                <span className="text-xs text-gray-600 bg-white/[0.04] px-2 py-0.5 rounded-full">
-                  {cat.duas.length} duas
-                </span>
+            {/* Category header */}
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-2xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-xl flex-shrink-0">
+                {cat.icon}
               </div>
+              <div>
+                <h2 className="text-base font-bold text-white leading-tight">{cat.label}</h2>
+                <p className="text-[11px] text-gray-500">{cat.duas.length} supplications</p>
+              </div>
+            </div>
 
-              {/* Duas List */}
-              <div className="space-y-3">
-                {cat.duas.map((dua, di) => (
-                  <motion.div
+            {/* Duas */}
+            <div className="space-y-3">
+              {cat.duas.map((dua, di) => {
+                const isOpen = expandedDua === dua.id;
+                return (
+                  <div
                     key={dua.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                    className={`rounded-2xl border bg-gradient-to-br ${cat.color} overflow-hidden`}
+                    className={`rounded-2xl border bg-gradient-to-br ${cat.color} overflow-hidden transition-all duration-200`}
                   >
-                    {/* Dua Header */}
-                    <div
-                      onClick={() => setExpandedDua(expandedDua === dua.id ? null : dua.id)}
-                      className="w-full flex items-center justify-between p-4 text-left cursor-pointer"
+                    {/* Tap header */}
+                    <button
+                      onClick={() => setExpandedDua(isOpen ? null : dua.id)}
+                      className="w-full flex items-center gap-3 px-4 py-4 text-left"
                     >
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-gray-300">
-                          {di + 1}
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-semibold text-white">{dua.title}</h3>
-                          <p className="text-[10px] text-gray-500">{dua.reference}</p>
-                        </div>
+                      <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.08] flex items-center justify-center text-xs font-bold text-gray-400">
+                        {di + 1}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-white truncate">{dua.title}</p>
+                        <p className="text-[10px] text-gray-500 mt-0.5 truncate">{dua.reference}</p>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <button
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <span
+                          role="button"
+                          tabIndex={0}
                           onClick={e => { e.stopPropagation(); copyArabic(dua.arabic, dua.id); }}
-                          className="text-[10px] px-2 py-1 rounded-lg bg-white/10 text-gray-400 hover:text-white transition-colors"
+                          onKeyDown={e => { if (e.key === 'Enter') { e.stopPropagation(); copyArabic(dua.arabic, dua.id); }}}
+                          className={`text-[10px] px-2.5 py-1.5 rounded-lg border transition-all ${
+                            copied === dua.id
+                              ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                              : 'bg-white/[0.06] text-gray-500 border-white/[0.08] hover:text-white'
+                          }`}
                         >
-                          {copied === dua.id ? '✓ Copied' : '📋 Copy'}
-                        </button>
+                          {copied === dua.id ? '✓ Copied' : 'Copy'}
+                        </span>
                         <motion.span
-                          animate={{ rotate: expandedDua === dua.id ? 180 : 0 }}
-                          className="text-gray-400 text-sm"
-                        >▾</motion.span>
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="text-gray-500 text-base leading-none"
+                        >
+                          ▾
+                        </motion.span>
                       </div>
-                    </div>
+                    </button>
 
-                    {/* Expanded Content */}
-                    <AnimatePresence>
-                      {expandedDua === dua.id && (
+                    {/* Expanded panel */}
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
                         <motion.div
+                          key="content"
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.25 }}
+                          transition={{ duration: 0.28, ease: 'easeInOut' }}
                           className="overflow-hidden"
                         >
-                          <div className="px-4 pb-5 space-y-4 border-t border-white/[0.06]">
-                            {/* Arabic */}
-                            <div className="pt-4">
-                              <p className="font-arabic text-2xl md:text-3xl text-islamic-gold leading-[2.2] text-right" dir="rtl">
+                          <div className="border-t border-white/[0.06] px-4 py-5 space-y-4">
+
+                            {/* Arabic text */}
+                            <div className="bg-black/20 rounded-2xl px-4 py-5">
+                              <p className="font-arabic text-2xl md:text-3xl text-islamic-gold leading-[2.4] text-right" dir="rtl">
                                 {dua.arabic}
                               </p>
                             </div>
+
                             {/* Transliteration */}
-                            <div className="bg-white/[0.04] rounded-xl p-3">
-                              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Transliteration</p>
-                              <p className="text-sm text-gray-300 italic leading-6">{dua.transliteration}</p>
+                            <div className="bg-white/[0.04] rounded-xl px-4 py-3">
+                              <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mb-1.5">Transliteration</p>
+                              <p className="text-sm text-gray-300 italic leading-7">{dua.transliteration}</p>
                             </div>
-                            {/* Translation */}
-                            <div className="bg-white/[0.04] rounded-xl p-3">
-                              <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Meaning</p>
-                              <p className={`text-sm text-gray-200 leading-6 ${readingLanguage === 'ur' ? 'font-arabic text-right' : ''}`}>
-                                "{readingLanguage === 'ur' ? dua.translation_ur : dua.translation}"
+
+                            {/* Meaning */}
+                            <div className="bg-white/[0.04] rounded-xl px-4 py-3">
+                              <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mb-1.5">
+                                {readingLanguage === 'ur' ? 'ترجمہ' : 'Meaning'}
+                              </p>
+                              <p className={`text-sm text-gray-200 leading-7 ${readingLanguage === 'ur' ? 'font-arabic text-right text-base' : ''}`}>
+                                {readingLanguage === 'ur' ? dua.translation_ur : dua.translation}
                               </p>
                             </div>
-                            {/* Source */}
+
+                            {/* Reference badge */}
                             <div className="flex items-center gap-2">
-                              <span className="text-[10px] text-islamic-gold/60">📖 Source:</span>
-                              <span className="text-[10px] text-gray-500">{dua.reference}</span>
+                              <span className="text-[10px] bg-islamic-gold/10 text-islamic-gold/80 border border-islamic-gold/20 px-2.5 py-1 rounded-full">
+                                📖 {dua.reference}
+                              </span>
                             </div>
                           </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        ))}
 
         {/* Empty state */}
-        {filteredCategories.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-4xl mb-4">🤲</p>
-            <p className="text-gray-400">No duas found for "{searchQuery}"</p>
+        {displayedCategories.length === 0 && (
+          <div className="text-center py-24">
+            <p className="text-5xl mb-4">🤲</p>
+            <p className="text-white font-semibold mb-1">No duas found</p>
+            <p className="text-sm text-gray-500">Try a different keyword</p>
+            <button
+              onClick={() => setSearchQuery('')}
+              className="mt-4 px-5 py-2.5 bg-islamic-gold/15 text-islamic-gold border border-islamic-gold/30 rounded-xl text-sm font-semibold"
+            >
+              Clear Search
+            </button>
           </div>
         )}
       </div>
