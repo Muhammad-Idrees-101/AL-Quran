@@ -61,13 +61,16 @@ export const SidebarNavigation: React.FC = () => {
           <div className="flex items-center gap-2">
             {/* Dark/Light Toggle */}
             <button
+              type="button"
               onClick={toggleTheme}
+              suppressHydrationWarning
               className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-sm"
             >
               {isDark ? '🌙' : '☀️'}
             </button>
             {/* Settings Toggle */}
             <button
+              type="button"
               onClick={toggleDrawer}
               className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-sm"
             >
@@ -75,6 +78,7 @@ export const SidebarNavigation: React.FC = () => {
             </button>
             {/* More Menu Toggle */}
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-sm"
             >
@@ -105,8 +109,8 @@ export const SidebarNavigation: React.FC = () => {
                     >
                       <div className={cn(
                         'flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border transition-all',
-                        isActive 
-                          ? 'bg-islamic-gold/15 border-islamic-gold/30 text-islamic-gold' 
+                        isActive
+                          ? 'bg-islamic-gold/15 border-islamic-gold/30 text-islamic-gold'
                           : 'bg-white/[0.03] border-white/[0.05] text-gray-300'
                       )}>
                         <span className="text-2xl">{item.icon}</span>
@@ -245,22 +249,23 @@ export const SidebarNavigation: React.FC = () => {
 
           {/* Right-side controls */}
           <div className="min-[1200px]:ml-auto flex items-center gap-2 shrink-0 mt-auto min-[1200px]:mt-0">
-            <motion.button
-              whileTap={{ scale: 0.9 }}
+            <button
+              type="button"
               onClick={toggleTheme}
               title={isDark ? 'Switch to Light mode' : 'Switch to Dark mode'}
-              className="w-9 h-9 rounded-xl bg-white/[0.05] border border-white/[0.08] text-gray-300 transition-all hover:bg-white/[0.12] hover:text-white flex items-center justify-center text-base"
+              suppressHydrationWarning
+              className="w-9 h-9 rounded-xl bg-white/[0.05] border border-white/[0.08] text-gray-300 transition-all hover:bg-white/[0.12] hover:text-white flex items-center justify-center text-base active:scale-90"
             >
               {isDark ? '🌙' : '☀️'}
-            </motion.button>
+            </button>
 
-            <motion.button
-              whileTap={{ scale: 0.95 }}
+            <button
+              type="button"
               onClick={toggleDrawer}
-              className="w-full min-[1200px]:w-auto px-3 py-2 rounded-xl bg-white/[0.05] border border-white/[0.08] text-gray-300 text-sm font-medium transition-all hover:bg-white/[0.1] hover:text-white flex items-center justify-center gap-2"
+              className="w-full min-[1200px]:w-auto px-3 py-2 rounded-xl bg-white/[0.05] border border-white/[0.08] text-gray-300 text-sm font-medium transition-all hover:bg-white/[0.1] hover:text-white flex items-center justify-center gap-2 active:scale-95"
             >
               <span>⚙️</span> <span className="min-[1200px]:hidden">Settings</span>
-            </motion.button>
+            </button>
           </div>
         </div>
       </motion.div>

@@ -310,24 +310,24 @@ export const SettingsDrawer: React.FC = () => {
               <div className="hidden md:block">
                 <Section title="🎙️ Reciter Library">
 
-                {/* Active reciter card */}
-                {activeReciterMeta && (
-                  <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-islamic-gold/10 border border-islamic-gold/25 mb-3">
-                    <div className="w-8 h-8 rounded-full bg-islamic-gold flex items-center justify-center text-xs font-bold text-dark-slate shrink-0">
-                      {getInitials(activeReciterMeta.label)}
+                  {/* Active reciter card */}
+                  {activeReciterMeta && (
+                    <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-islamic-gold/10 border border-islamic-gold/25 mb-3">
+                      <div className="w-8 h-8 rounded-full bg-islamic-gold flex items-center justify-center text-xs font-bold text-dark-slate shrink-0">
+                        {getInitials(activeReciterMeta.label)}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-semibold text-islamic-gold truncate">{activeReciterMeta.label}</p>
+                        <p className="text-[10px] font-arabic text-islamic-gold/70">{activeReciterMeta.arabicName}</p>
+                      </div>
+                      <span className={`shrink-0 text-[9px] px-1.5 py-0.5 rounded-full border font-semibold ${STYLE_COLORS[activeReciterMeta.style]}`}>
+                        {activeReciterMeta.style}
+                      </span>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-semibold text-islamic-gold truncate">{activeReciterMeta.label}</p>
-                      <p className="text-[10px] font-arabic text-islamic-gold/70">{activeReciterMeta.arabicName}</p>
-                    </div>
-                    <span className={`shrink-0 text-[9px] px-1.5 py-0.5 rounded-full border font-semibold ${STYLE_COLORS[activeReciterMeta.style]}`}>
-                      {activeReciterMeta.style}
-                    </span>
-                  </div>
-                )}
+                  )}
 
-                {/* Search box */}
-                {/* <input
+                  {/* Search box */}
+                  {/* <input
                   type="text"
                   placeholder="Search by name or group…"
                   value={reciterSearch}
@@ -335,63 +335,63 @@ export const SettingsDrawer: React.FC = () => {
                   className="w-full bg-white/[0.06] border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-islamic-gold/50 mb-1"
                 /> */}
 
-                {/* <p className="text-[10px] text-gray-600 mb-3">
+                  {/* <p className="text-[10px] text-gray-600 mb-3">
                   {filteredEntries.length} of {Object.keys(RECITERS).length} reciters • everyayah.com
                 </p> */}
 
-                {/* Grouped list */}
-                <div className="space-y-5 max-h-[400px] overflow-y-auto show-scrollbar pr-1">
-                  {groups.map(group => (
-                    <div key={group}>
-                      <p className="text-[9px] font-bold text-gray-600 uppercase tracking-widest mb-2 px-1 flex items-center gap-2">
-                        <span className="flex-1 h-px bg-white/[0.06]" />
-                        {group}
-                        <span className="flex-1 h-px bg-white/[0.06]" />
-                      </p>
-                      <div className="space-y-1">
-                        {filteredEntries
-                          .filter(([, m]) => m.group === group)
-                          .map(([value, meta]) => {
-                            const isActive = reciter === value;
-                            return (
-                              <motion.button
-                                key={value}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => setReciter(value as AudioReciter)}
-                                className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-center gap-2.5 ${isActive
-                                  ? 'bg-islamic-gold/15 border border-islamic-gold/25'
-                                  : 'bg-white/[0.03] border border-transparent hover:bg-white/[0.07] hover:border-white/[0.08]'
-                                  }`}
-                              >
-                                {/* Avatar */}
-                                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-bold shrink-0 ${isActive ? 'bg-islamic-gold text-dark-slate' : 'bg-white/10 text-gray-400'
-                                  }`}>
-                                  {getInitials(meta.label)}
-                                </div>
-                                {/* Name + Arabic */}
-                                <div className="min-w-0 flex-1">
-                                  <p className={`font-semibold truncate leading-snug ${isActive ? 'text-islamic-gold' : 'text-gray-300'}`}>
-                                    {meta.label}
-                                  </p>
-                                  <p className="text-[9px] font-arabic  text-white leading-none mt-0.5">{meta.arabicName}</p>
-                                </div>
-                                {/* Style badge */}
-                                <span className={`shrink-0 text-[8px] px-1.5 py-0.5 rounded-full border font-semibold ${STYLE_COLORS[meta.style]}`}>
-                                  {meta.style}
-                                </span>
-                                {/* Check */}
-                                {isActive && <span className="text-islamic-gold shrink-0">✓</span>}
-                              </motion.button>
-                            );
-                          })}
+                  {/* Grouped list */}
+                  <div className="space-y-5 max-h-[400px] overflow-y-auto show-scrollbar pr-1">
+                    {groups.map(group => (
+                      <div key={group}>
+                        <p className="text-[9px] font-bold text-gray-600 uppercase tracking-widest mb-2 px-1 flex items-center gap-2">
+                          <span className="flex-1 h-px bg-white/[0.06]" />
+                          {group}
+                          <span className="flex-1 h-px bg-white/[0.06]" />
+                        </p>
+                        <div className="space-y-1">
+                          {filteredEntries
+                            .filter(([, m]) => m.group === group)
+                            .map(([value, meta]) => {
+                              const isActive = reciter === value;
+                              return (
+                                <motion.button
+                                  key={value}
+                                  whileTap={{ scale: 0.97 }}
+                                  onClick={() => setReciter(value as AudioReciter)}
+                                  className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-center gap-2.5 ${isActive
+                                    ? 'bg-islamic-gold/15 border border-islamic-gold/25'
+                                    : 'bg-white/[0.03] border border-transparent hover:bg-white/[0.07] hover:border-white/[0.08]'
+                                    }`}
+                                >
+                                  {/* Avatar */}
+                                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-bold shrink-0 ${isActive ? 'bg-islamic-gold text-dark-slate' : 'bg-white/10 text-gray-400'
+                                    }`}>
+                                    {getInitials(meta.label)}
+                                  </div>
+                                  {/* Name + Arabic */}
+                                  <div className="min-w-0 flex-1">
+                                    <p className={`font-semibold truncate leading-snug ${isActive ? 'text-islamic-gold' : 'text-gray-300'}`}>
+                                      {meta.label}
+                                    </p>
+                                    <p className="text-[9px] font-arabic  text-white leading-none mt-0.5">{meta.arabicName}</p>
+                                  </div>
+                                  {/* Style badge */}
+                                  <span className={`shrink-0 text-[8px] px-1.5 py-0.5 rounded-full border font-semibold ${STYLE_COLORS[meta.style]}`}>
+                                    {meta.style}
+                                  </span>
+                                  {/* Check */}
+                                  {isActive && <span className="text-islamic-gold shrink-0">✓</span>}
+                                </motion.button>
+                              );
+                            })}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                  {filteredEntries.length === 0 && (
-                    <p className="text-center text-xs text-gray-600 py-6">No reciters found</p>
-                  )}
-                </div>
-              </Section>
+                    ))}
+                    {filteredEntries.length === 0 && (
+                      <p className="text-center text-xs text-gray-600 py-6">No reciters found</p>
+                    )}
+                  </div>
+                </Section>
               </div>
 
               {/* Display */}

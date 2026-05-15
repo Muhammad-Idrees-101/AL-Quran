@@ -1,13 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { Providers } from './providers';
 import { SidebarNavigation, GlobalAudioPlayer, SettingsDrawer, Footer } from '@/components/organisms';
-import { validateServerEnv } from '@/lib/env';
+import { validateServerEnv, env } from '@/lib/env';
 import './globals.css';
 
 // Validate environment variables on the server
 validateServerEnv();
 
-const BASE_URL = 'https://al-quran-interactive.com';
+const BASE_URL = env.NEXT_PUBLIC_SITE_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -89,15 +90,17 @@ export const metadata: Metadata = {
     apple: '/logo.png',
   },
   manifest: '/manifest.json',
-  themeColor: '#0d9488',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
   verification: {
-    google: 'YOUR_GOOGLE_SEARCH_CONSOLE_TOKEN', // Replace with your token
+    google: '733e4fcea6a10f83',
   },
+};
+
+// ─── Viewport (separate export, required by Next.js 14+) ─────
+export const viewport: Viewport = {
+  themeColor: '#0d9488',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -169,6 +172,7 @@ export default function RootLayout({
             <SettingsDrawer />
           </div>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

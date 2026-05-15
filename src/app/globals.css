@@ -67,19 +67,19 @@
 
   /* Theme-aware backgrounds */
   .theme-nav-bg {
-    @apply bg-gradient-to-b min-[1200px]:bg-gradient-to-r from-[#0A1A14]/95 to-[#0D1B2A]/95;
+    @apply bg-gradient-to-b min-[1200px]:bg-gradient-to-r from-[#0D2620]/95 to-[#112240]/95;
   }
 
   .theme-sticky-header {
-    @apply bg-gradient-to-b from-[#0A1A14]/95 to-transparent;
+    @apply bg-gradient-to-b from-[#0D2620]/95 to-transparent;
   }
 
   .theme-hero-fade {
-    @apply bg-gradient-to-t from-[#0A1A14] to-transparent;
+    @apply bg-gradient-to-t from-[#0D2620] to-transparent;
   }
 
   .theme-bg-gradient {
-    @apply bg-gradient-to-b from-[#0A1A14]/95 to-[#0D1B2A]/95;
+    @apply bg-gradient-to-b from-[#0D2620]/95 to-[#112240]/95;
   }
 
   .theme-hero-glow {
@@ -95,13 +95,13 @@
 html {
   scroll-behavior: smooth;
   font-family: 'Inter', system-ui, sans-serif;
-  background-color: #0F1F1A;
+  background-color: #0D2620;
   overscroll-behavior-y: none;
 }
 
 body {
   @apply antialiased;
-  background: linear-gradient(135deg, #0F1F1A 0%, #0D1B2A 40%, #111827 70%, #0A1A12 100%);
+  background: linear-gradient(135deg, #0D2620 0%, #112240 40%, #1a2535 70%, #0e2018 100%);
   min-height: 100vh;
   overscroll-behavior-y: none;
 }

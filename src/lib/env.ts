@@ -9,7 +9,7 @@ interface EnvSchema {
   NEXT_PUBLIC_API_URL: string;
   NEXT_PUBLIC_AUDIO_CDN: string;
   NEXT_PUBLIC_ENV: 'development' | 'production' | 'test';
-  
+
   // Private (Server-side only)
   DATABASE_URL?: string;
   STRIPE_SECRET_KEY?: string;

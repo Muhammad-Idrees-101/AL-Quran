@@ -101,7 +101,7 @@ export const GlobalAudioPlayer: React.FC = () => {
                 </span>
               </motion.button>
             </div>
-            
+
             <audio
               ref={audioRef}
               onTimeUpdate={() => audioRef.current && setCurrentTime(audioRef.current.currentTime)}
@@ -111,7 +111,7 @@ export const GlobalAudioPlayer: React.FC = () => {
             />
 
             <div className={`pt-4 pb-4 px-4 md:px-6 backdrop-blur-3xl transition-colors duration-500 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] ${isLight ? 'bg-white/95 border-t border-gray-200' : 'bg-[#0A1118]/95 border-t border-white/[0.08]'}`}>
-              
+
               {/* Progress Bar */}
               <div className="w-full h-2 bg-white/10 rounded-full cursor-pointer mb-4 group relative" onClick={handleSeek}>
                 <motion.div
@@ -139,9 +139,9 @@ export const GlobalAudioPlayer: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   {/* Player Settings / Reciter Modal Trigger (Mobile Only) */}
-                  <button 
+                  <button
                     onClick={() => setShowSettingsModal(true)}
                     className="md:hidden flex flex-col items-center justify-center p-2 rounded-xl bg-white/[0.05] border border-white/[0.1] active:scale-95 transition-transform"
                   >
@@ -157,7 +157,7 @@ export const GlobalAudioPlayer: React.FC = () => {
                     <span className={`text-[10px] md:text-xs font-mono font-medium ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>
                       {formatTime(currentTime)}
                     </span>
-                    
+
                     <div className="flex items-center gap-4 md:gap-3">
                       <button onClick={playPrevAyah} className="w-10 h-10 flex items-center justify-center rounded-full text-white hover:bg-white/10 active:scale-90 transition-all text-xl">
                         ⏮
@@ -180,13 +180,13 @@ export const GlobalAudioPlayer: React.FC = () => {
 
                   {/* Desktop Only: Volume & Speed & Reciter */}
                   <div className="hidden md:flex items-center gap-3">
-                    <button 
+                    <button
                       onClick={() => setShowSettingsModal(true)}
                       className="px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.1] text-xs font-semibold text-gray-300 hover:text-white hover:bg-white/[0.1] transition-colors flex items-center gap-2"
                     >
                       🎙️ {activeReciterMeta?.label.split(' ')[0]}
                     </button>
-                    
+
                     <select
                       value={playbackRate}
                       onChange={(e) => setPlaybackRate(parseFloat(e.target.value))}
@@ -222,14 +222,14 @@ export const GlobalAudioPlayer: React.FC = () => {
             className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:bg-black/60 md:backdrop-blur-sm"
           >
             <div className="w-full md:w-[400px] h-[85vh] md:h-[600px] bg-[#0A1118] md:rounded-3xl border-t md:border border-white/[0.1] shadow-2xl flex flex-col">
-              
+
               <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/[0.08]">
                 <h3 className="text-lg font-bold text-white">Player Settings</h3>
                 <button onClick={() => setShowSettingsModal(false)} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white">✕</button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
-                
+
                 {/* Mobile Playback Controls */}
                 <div className="md:hidden space-y-4 bg-white/[0.03] p-4 rounded-2xl border border-white/[0.05]">
                   <div>
@@ -277,7 +277,7 @@ export const GlobalAudioPlayer: React.FC = () => {
                     })}
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </motion.div>
