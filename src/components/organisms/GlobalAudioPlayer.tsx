@@ -221,25 +221,29 @@ export const GlobalAudioPlayer: React.FC = () => {
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed inset-0 z-50 flex items-end justify-center md:items-center md:bg-black/60 md:backdrop-blur-sm"
           >
-            <div className="w-full md:w-[400px] h-[85vh] md:h-[600px] bg-[#0A1118] md:rounded-3xl border-t md:border border-white/[0.1] shadow-2xl flex flex-col">
+            <div className={`w-full md:w-[400px] h-[85vh] md:h-[600px] md:rounded-3xl border-t md:border shadow-2xl flex flex-col ${isLight ? 'bg-white border-slate-200' : 'bg-[#0A1118] border-white/[0.1]'}`}>
 
-              <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/[0.08]">
-                <h3 className="text-lg font-bold text-white">Player Settings</h3>
-                <button onClick={() => setShowSettingsModal(false)} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white">✕</button>
+              <div className={`flex items-center justify-between p-4 md:p-6 border-b ${isLight ? 'border-slate-100' : 'border-white/[0.08]'}`}>
+                <h3 className={`text-lg font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>Player Settings</h3>
+                <button onClick={() => setShowSettingsModal(false)} className={`w-8 h-8 rounded-full flex items-center justify-center ${isLight ? 'bg-slate-100 text-slate-600' : 'bg-white/10 text-white'}`}>✕</button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
 
                 {/* Mobile Playback Controls */}
-                <div className="md:hidden space-y-4 bg-white/[0.03] p-4 rounded-2xl border border-white/[0.05]">
+                <div className={`md:hidden space-y-4 p-4 rounded-2xl border ${isLight ? 'bg-slate-50 border-slate-200' : 'bg-white/[0.03] border-white/[0.05]'}`}>
                   <div>
-                    <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Speed</p>
+                    <p className={`text-xs font-semibold mb-2 uppercase tracking-wider ${isLight ? 'text-slate-500' : 'text-gray-400'}`}>Speed</p>
                     <div className="flex gap-2">
                       {[0.75, 1, 1.25, 1.5, 2].map(speed => (
                         <button
                           key={speed}
                           onClick={() => setPlaybackRate(speed)}
-                          className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all border ${playbackRate === speed ? 'bg-islamic-gold text-black border-islamic-gold' : 'bg-transparent text-gray-400 border-white/[0.1]'}`}
+                          className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all border ${
+                            playbackRate === speed 
+                              ? 'bg-islamic-gold text-black border-islamic-gold shadow-md' 
+                              : (isLight ? 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100' : 'bg-transparent text-gray-400 border-white/[0.1] hover:bg-white/[0.05]')
+                          }`}
                         >
                           {speed}x
                         </button>
@@ -247,7 +251,7 @@ export const GlobalAudioPlayer: React.FC = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Volume</p>
+                    <p className={`text-xs font-semibold mb-2 uppercase tracking-wider ${isLight ? 'text-slate-500' : 'text-gray-400'}`}>Volume</p>
                     <input type="range" min="0" max="100" value={volume} onChange={(e) => setVolume(parseInt(e.target.value))} className="w-full accent-islamic-gold" />
                   </div>
                 </div>
@@ -262,14 +266,22 @@ export const GlobalAudioPlayer: React.FC = () => {
                         <button
                           key={id}
                           onClick={() => setReciter(id as AudioReciter)}
-                          className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all border ${isActive ? 'bg-teal-500/10 border-teal-500/30' : 'bg-white/[0.03] border-transparent hover:bg-white/[0.06]'}`}
+                          className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all border ${
+                            isActive 
+                              ? (isLight ? 'bg-emerald-50 border-emerald-200' : 'bg-teal-500/10 border-teal-500/30')
+                              : (isLight ? 'bg-white border-slate-200 hover:bg-slate-50' : 'bg-white/[0.03] border-transparent hover:bg-white/[0.06]')
+                          }`}
                         >
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${isActive ? 'bg-islamic-gold text-black shadow-[0_0_10px_rgba(212,175,55,0.5)]' : 'bg-white/10 text-gray-400'}`}>
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
+                            isActive 
+                              ? 'bg-islamic-gold text-black shadow-md' 
+                              : (isLight ? 'bg-slate-100 text-slate-500' : 'bg-white/10 text-gray-400')
+                          }`}>
                             {meta.label.charAt(0)}
                           </div>
                           <div className="flex-1 text-left">
-                            <p className={`text-sm font-bold ${isActive ? 'text-islamic-gold' : 'text-white'}`}>{meta.label}</p>
-                            <p className="text-[10px] text-gray-500">{meta.style}</p>
+                            <p className={`text-sm font-bold ${isActive ? 'text-islamic-gold' : (isLight ? 'text-slate-900' : 'text-white')}`}>{meta.label}</p>
+                            <p className={`text-[10px] ${isLight ? 'text-slate-500' : 'text-gray-500'}`}>{meta.style}</p>
                           </div>
                           {isActive && <span className="text-islamic-gold text-xl">✓</span>}
                         </button>

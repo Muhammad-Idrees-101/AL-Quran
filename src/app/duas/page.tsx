@@ -366,7 +366,7 @@ export default function DuasPage() {
       <motion.section
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 min-[1200px]:top-20 z-20 theme-sticky-header backdrop-blur-xl border-b border-white/[0.06]"
+        className={`sticky top-16 lg:top-0 min-[1200px]:top-20 z-20 theme-sticky-header backdrop-blur-xl border-b ${isLight ? 'border-slate-100 bg-white/95' : 'border-white/[0.06]'}`}
       >
         {/* Title row */}
         <div className="flex items-center gap-3 px-4 md:px-8 pt-4 pb-2">
@@ -406,7 +406,7 @@ export default function DuasPage() {
         </div>
 
         {/* Category chips horizontal scroll */}
-        <div className="flex gap-2 overflow-x-auto pb-3 px-4 md:px-8 show-scrollbar md:flex-wrap">
+        <div className="flex gap-2 overflow-x-auto pb-3 px-4 md:px-8 md:flex-wrap">
           <button
             onClick={() => setActiveCategory(null)}
             className={`flex-shrink-0 h-9 px-4 rounded-full text-xs font-semibold transition-all border ${
@@ -477,24 +477,11 @@ export default function DuasPage() {
                       <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white/[0.08] flex items-center justify-center text-xs font-bold text-gray-400">
                         {di + 1}
                       </span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white truncate">{dua.title}</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5 truncate">{dua.reference}</p>
+                      <div className="flex-1 min-w-0 pr-2">
+                        <p className="text-sm font-semibold text-white line-clamp-2 leading-snug">{dua.title}</p>
+                        <p className="text-[10px] text-gray-500 mt-1 line-clamp-1">{dua.reference}</p>
                       </div>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <span
-                          role="button"
-                          tabIndex={0}
-                          onClick={e => { e.stopPropagation(); copyArabic(dua.arabic, dua.id); }}
-                          onKeyDown={e => { if (e.key === 'Enter') { e.stopPropagation(); copyArabic(dua.arabic, dua.id); }}}
-                          className={`text-[10px] px-2.5 py-1.5 rounded-lg border transition-all ${
-                            copied === dua.id
-                              ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
-                              : 'bg-white/[0.06] text-gray-500 border-white/[0.08] hover:text-white'
-                          }`}
-                        >
-                          {copied === dua.id ? '✓ Copied' : 'Copy'}
-                        </span>
+                      <div className="flex items-center flex-shrink-0">
                         <motion.span
                           animate={{ rotate: isOpen ? 180 : 0 }}
                           transition={{ duration: 0.2 }}
@@ -541,11 +528,21 @@ export default function DuasPage() {
                               </p>
                             </div>
 
-                            {/* Reference badge */}
-                            <div className="flex items-center gap-2">
+                            {/* Reference badge & Actions */}
+                            <div className="flex items-center justify-between">
                               <span className="text-[10px] bg-islamic-gold/10 text-islamic-gold/80 border border-islamic-gold/20 px-2.5 py-1 rounded-full">
                                 📖 {dua.reference}
                               </span>
+                              <button
+                                onClick={(e) => { e.stopPropagation(); copyArabic(dua.arabic, dua.id); }}
+                                className={`text-[10px] px-3 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 ${
+                                  copied === dua.id
+                                    ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                                    : 'bg-white/[0.06] text-gray-400 border-white/[0.08] hover:text-white hover:bg-white/[0.1]'
+                                }`}
+                              >
+                                {copied === dua.id ? '✓ Copied' : '📋 Copy Arabic'}
+                              </button>
                             </div>
                           </div>
                         </motion.div>

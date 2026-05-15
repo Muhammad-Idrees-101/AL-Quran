@@ -59,7 +59,7 @@ export function QuranPlayerContent({ surah, ayahs, initialAyah }: Props) {
       <motion.section
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`sticky top-0 min-[1200px]:top-20 z-20 theme-sticky-header backdrop-blur-xl border-b px-4 md:px-8 py-4 transition-colors duration-500 ${isLight ? 'border-gray-100' : 'border-white/[0.06]'
+        className={`sticky top-16 lg:top-0 min-[1200px]:top-20 z-20 theme-sticky-header backdrop-blur-xl border-b px-4 md:px-8 py-4 transition-colors duration-500 ${isLight ? 'border-gray-100 bg-white/95' : 'border-white/[0.06]'
           }`}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -244,10 +244,10 @@ function PlayDropdown({
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
             className={cn(
-              "absolute top-full mt-2 left-0 min-w-[220px] z-30 backdrop-blur-xl border rounded-xl shadow-2xl overflow-hidden py-1.5 transition-colors",
+              "absolute top-full mt-2 right-0 sm:left-0 sm:right-auto min-w-[220px] z-30 border rounded-xl shadow-2xl overflow-hidden py-1.5 transition-colors",
               isLight
-                ? "bg-white/95 border-gray-200"
-                : "bg-[#0A1A14]/95 border-white/[0.08]"
+                ? "bg-white border-gray-200"
+                : "bg-[#0A1A14] border-white/[0.08]"
             )}
           >
             <button
@@ -266,7 +266,7 @@ function PlayDropdown({
               </div>
             </button>
 
-            <div className="h-px bg-white/[0.06] my-1 mx-2" />
+            <div className={`h-px my-1 mx-2 ${isLight ? 'bg-gray-100' : 'bg-white/[0.06]'}`} />
 
             <button
               onClick={() => {
@@ -275,7 +275,7 @@ function PlayDropdown({
               }}
               className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-islamic-gold/10 transition-colors group"
             >
-              <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-gray-400 group-hover:bg-white/20 transition-colors">
+              <span className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isLight ? 'bg-gray-100 text-gray-500 group-hover:bg-gray-200' : 'bg-white/10 text-gray-400 group-hover:bg-white/20'}`}>
                 🔢
               </span>
               <div>
